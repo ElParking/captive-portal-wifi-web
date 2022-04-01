@@ -49,7 +49,7 @@ var WiFiPortal = {
                 var stringifyJson = JSON.stringify(jsonResponse, undefined, 2);
                 responseVal = WiFiPortal.highlight(stringifyJson);
             } else {
-                responseVal = "Unable to get info from device";
+                responseVal = "Imposible recuperar la información";
             }
 
             document.getElementById("response").innerHTML = responseVal ? responseVal : '';
@@ -169,7 +169,7 @@ var WiFiPortal = {
 
             if( ! WiFiPortal.Test.success ){
                 WiFiPortal.Test.timedout = true;
-                WiFiPortal.Error.show('Test has timed out after ' + WiFiPortal.Test._timeout + ' seconds. Please check the SSID and Password and try again.');
+                WiFiPortal.Error.show('Tiempo para test excedido después de ' + WiFiPortal.Test._timeout + ' segundos. Por favor, revisa el SSID y Contraseña y vuelve a intentarlo.');
                 WiFiPortal.Info.hide();
                 // Empty status box
                 var responseDiv = document.getElementById("response");
@@ -201,32 +201,32 @@ var WiFiPortal = {
                            if (resp.wifi.status === 'got ip' && resp.wifi.ssid === WiFiPortal.Test.ssid) {
                                WiFiPortal.Test.success = true;
                                WiFiPortal.Error.hide();
-                               WiFiPortal.Info.show('WiFi connection successful! Connected to ' + resp.wifi.ssid);
+                               WiFiPortal.Info.show('¡Conexión a la WiFi completada! Conectado a ' + resp.wifi.ssid);
                                WiFiPortal.Buttons.enableAll();
                                WiFiPortal.Timers.clear(); // Clear any timers after succesful connection
                            } else {
-                               errorMsg = 'WiFi current status is ' + resp.wifi.status;
+                               errorMsg = 'Estado de la conexión WiFi: ' + resp.wifi.status;
                            }
                        }
 
                    } else {
-                       errorMsg = 'Received response, error getting WiFi status';
+                       errorMsg = 'Recibida respuesta, error obteniendo el estado de la WiFi';
                    }
 
                } else {
                     WiFiPortal.Info.hide();
-                    WiFiPortal.Error.show('Error getting WiFi status, trying again in 5 seconds...');
+                    WiFiPortal.Error.show('Error obteniendo el estado de la WiFi, probando otra vez en 5 segundos...');
                }
 
                 WiFiPortal.Test._checks++;
                 // Only reschedule next check timer if test was not a success and test has not timed out yet
                 if ( ! WiFiPortal.Test.success && ! WiFiPortal.Test.timedout ) {
                     WiFiPortal.Error.hide();
-                    WiFiPortal.Info.show(errorMsg + ', check ' + WiFiPortal.Test._checks + ', trying again in ' + WiFiPortal.Test._interval + ' seconds...');
+                    WiFiPortal.Info.show(errorMsg + ', check ' + WiFiPortal.Test._checks + ', volviendolo a intentar en ' + WiFiPortal.Test._interval + ' segundos...');
                     WiFiPortal.Timers.Test.init();
                 }
 
-            }, 'Checking device WiFi status...' );
+            }, 'Obteniendo el estado de la WiFi...' );
         }
     },
     save: function(){
@@ -236,29 +236,29 @@ var WiFiPortal = {
 
         if( ! ssid || ssid.length < 1 ){
             WiFiPortal.Info.hide();
-            WiFiPortal.Error.show( 'You must select an SSID from the dropdown!' );
+            WiFiPortal.Error.show( 'Tienes que seleccionar el SSID del desplegable!' );
             return;
         }
 
-        WiFiPortal.Buttons.disableAll('Please wait, sending...');
+        WiFiPortal.Buttons.disableAll('Por favor espera, enviando...');
 
         WiFiPortal.Test.ssid = ssid; // Set SSID value in test so we can verify connection is to that exact SSID
 
-        WiFiPortal.rpcCall('POST', 'WiFi.PortalTest', 'Sending credentials to device to test...', { ssid: ssid, pass: password, user: user } , function( resp ){
+        WiFiPortal.rpcCall('POST', 'WiFi.PortalTest', 'Enviando credenciales al dispositivo para probarlas...', { ssid: ssid, pass: password, user: user } , function( resp ){
             // True means we received a response, but no data
             if( resp && resp !== true && resp.result !== undefined ){
 
                 if( resp.result === false ){
-                    WiFiPortal.Error.show('Error from device setting up STA! Check SSID and Password and try again!');
+                    WiFiPortal.Error.show('!Error del dispositivo al configurar la WiFi! Comprueba el SSID y Password y vuelvelo a intentar!');
                     WiFiPortal.Buttons.enableAll();
                 } else {
                     WiFiPortal.Error.hide(); // Hide error when saving (to remove stale errors)
-                    WiFiPortal.Info.show('Device is testing WiFi connection, please wait...');
+                    WiFiPortal.Info.show('El dispositivo está probando la conexión WiFi, por favor espera...');
                     WiFiPortal.Test.init();
                 }
 
             } else {
-                WiFiPortal.Error.show('Error sending credentials to device, please try again');
+                WiFiPortal.Error.show('Error enviando credenciales al dispositivo, por favor, intentalo de nuevo');
                 WiFiPortal.Buttons.enableAll();
             }
             
@@ -267,9 +267,9 @@ var WiFiPortal = {
     },
     rescan: function () {
 
-        WiFiPortal.Buttons.disableAll('Scanning...');
+        WiFiPortal.Buttons.disableAll('Buscando...');
 
-        WiFiPortal.rpcCall('POST', 'WiFi.PortalScan', 'Scanning for WiFi networks in range of device...', false, function ( resp ) {
+        WiFiPortal.rpcCall('POST', 'WiFi.PortalScan', 'Buscando redes wifi en rango...', false, function ( resp ) {
             
             if (resp && resp.length > 0) {
                 // Clear last scan networks
@@ -278,7 +278,7 @@ var WiFiPortal = {
 
                 var netSelect = document.getElementById("networks");
                 netSelect.removeAttribute("disabled"); // Remove disabled (on page load)
-                netSelect.innerHTML = '<option value="-1" disabled="disabled" selected="selected">Please select an SSID...</option>'; // clear any existing ones
+                netSelect.innerHTML = '<option value="-1" disabled="disabled" selected="selected">Por favor, selecciona un SSID...</option>'; // clear any existing ones
 
                 resp.forEach(function (net) {
                     // Only add SSID that do not exist already
@@ -308,11 +308,11 @@ var WiFiPortal = {
                     WiFiPortal.Networks.push(net);
                 });
 
-                WiFiPortal.Info.show("Please select from one of the " + WiFiPortal.SSIDs.length + " WiFi networks found.");
+                WiFiPortal.Info.show("Por favor, selecciona una de las " + WiFiPortal.SSIDs.length + " redes encontradas.");
 
             } else {
                 WiFiPortal.Info.hide();
-                WiFiPortal.Error.show('No networks found, try again...');
+                WiFiPortal.Error.show('Ningna red encontrada, prueba otra vez...');
             }
 
             WiFiPortal.Buttons.enableAll();
@@ -344,7 +344,7 @@ var WiFiPortal = {
                 console.log( 'rpcCall httpRequest status is NOT 200!', httpRequest );
 
                 if( httpRequest.responseText && httpRequest.responseText.length > 0 ){
-                    WiFiPortal.Error.show( "Error from device ( " + httpRequest.responseText + " ) -- Please try again");
+                    WiFiPortal.Error.show( "Error del dispositivo ( " + httpRequest.responseText + " ) -- Prueba otra vez");
                     callback(true);
                 } else {
                     callback(false);
