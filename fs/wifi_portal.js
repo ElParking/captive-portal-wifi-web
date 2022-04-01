@@ -169,7 +169,7 @@ var WiFiPortal = {
 
             if( ! WiFiPortal.Test.success ){
                 WiFiPortal.Test.timedout = true;
-                WiFiPortal.Error.show('Tiempo para test excedido después de ' + WiFiPortal.Test._timeout + ' segundos. Por favor, revisa el SSID y Contraseña y vuelve a intentarlo.');
+                WiFiPortal.Error.show('Tiempo excedido después de ' + WiFiPortal.Test._timeout + ' segundos. Por favor, revisa el SSID y la contraseña y vuelve a intentarlo.');
                 WiFiPortal.Info.hide();
                 // Empty status box
                 var responseDiv = document.getElementById("response");
