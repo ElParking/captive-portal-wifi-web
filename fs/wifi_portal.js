@@ -249,7 +249,7 @@ var WiFiPortal = {
             if( resp && resp !== true && resp.result !== undefined ){
 
                 if( resp.result === false ){
-                    WiFiPortal.Error.show('!Error del dispositivo al configurar la WiFi! Comprueba el SSID y Password y vuelvelo a intentar!');
+                    WiFiPortal.Error.show('!Error del dispositivo al configurar la WiFi! Comprueba el SSID y la contraseña y vuélvelo a intentar!');
                     WiFiPortal.Buttons.enableAll();
                 } else {
                     WiFiPortal.Error.hide(); // Hide error when saving (to remove stale errors)
