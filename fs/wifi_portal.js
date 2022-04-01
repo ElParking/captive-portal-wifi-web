@@ -258,7 +258,7 @@ var WiFiPortal = {
                 }
 
             } else {
-                WiFiPortal.Error.show('Error enviando credenciales al dispositivo, por favor, intentalo de nuevo');
+                WiFiPortal.Error.show('Error enviando credenciales al dispositivo, por favor, inténtalo de nuevo');
                 WiFiPortal.Buttons.enableAll();
             }
             
