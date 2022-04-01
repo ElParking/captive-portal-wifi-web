@@ -169,7 +169,7 @@ var WiFiPortal = {
 
             if( ! WiFiPortal.Test.success ){
                 WiFiPortal.Test.timedout = true;
-                WiFiPortal.Error.show('Tiempo para test excedido después de ' + WiFiPortal.Test._timeout + ' segundos. Por favor, revisa el SSID y Contraseña y vuelve a intentarlo.');
+                WiFiPortal.Error.show('Tiempo excedido después de ' + WiFiPortal.Test._timeout + ' segundos. Por favor, revisa el SSID y la contraseña y vuelve a intentarlo.');
                 WiFiPortal.Info.hide();
                 // Empty status box
                 var responseDiv = document.getElementById("response");
@@ -249,7 +249,7 @@ var WiFiPortal = {
             if( resp && resp !== true && resp.result !== undefined ){
 
                 if( resp.result === false ){
-                    WiFiPortal.Error.show('!Error del dispositivo al configurar la WiFi! Comprueba el SSID y Password y vuelvelo a intentar!');
+                    WiFiPortal.Error.show('!Error del dispositivo al configurar la WiFi! Comprueba el SSID y la contraseña y vuélvelo a intentar!');
                     WiFiPortal.Buttons.enableAll();
                 } else {
                     WiFiPortal.Error.hide(); // Hide error when saving (to remove stale errors)
@@ -258,7 +258,7 @@ var WiFiPortal = {
                 }
 
             } else {
-                WiFiPortal.Error.show('Error enviando credenciales al dispositivo, por favor, intentalo de nuevo');
+                WiFiPortal.Error.show('Error enviando credenciales al dispositivo, por favor, inténtalo de nuevo');
                 WiFiPortal.Buttons.enableAll();
             }
             
