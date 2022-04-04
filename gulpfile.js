@@ -1,6 +1,6 @@
 const gulp = require('gulp');
 const uglify = require('gulp-uglify');
-const cssmin = require("gulp-minify-css");
+const cleanCSS = require('gulp-clean-css');
 const pump = require('pump');
 const gzip = require('gulp-gzip');
 const htmlmin = require('gulp-htmlmin');
@@ -36,7 +36,7 @@ gulp.task('mincss', function (cb) {
     pump(
         [
             gulp.src(cssSources),
-            cssmin(),
+            cleanCSS({compatibility: 'ie8'}),
             // rename({ suffix: '.min' }),
             gulp.dest(minDest)
         ],
